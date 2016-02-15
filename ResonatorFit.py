@@ -26,7 +26,7 @@ def analyze(filename):
     
     f0 = round(p[1]*1e-9, 6)
     kappa = p[2]
-    q = p[1]/(2*pi*kappa)
+    q = p[1]/(kappa/(2*pi))
     
 #     Calculate fit error
 
@@ -36,9 +36,9 @@ def analyze(filename):
     kappaerr = perr[2]
     qerr = perr[1]/(2*pi*perr[2])
     
-    print 'f0 = {}+/- {:.5f} ({:.2}%) GHz'.format(f0, f0err, (f0err/f0)*100)
-    print 'kappa = {}+/- {:.5f} ({:.2}%)'.format(kappa, kappaerr, (kappaerr/kappa)*100)
-    print 'Q = {:.3f}+/- {:.3f} ({:.2}%)'.format(q, qerr, (qerr/q)*100)
+    print 'f0 = {} +/- {:.5f} ({:.2}%) GHz'.format(f0, f0err, (f0err/f0)*100)
+    print 'kappa = {:.4E} +/- {:.4E} ({:.2}%)'.format(kappa, kappaerr, (kappaerr/kappa)*100)
+    print 'Q = {:.4E} +/- {:.4E} ({:.2}%)'.format(q, qerr, (qerr/q)*100)
 
     fig.line(x*1e-9,lorentz(x,*p))
 
@@ -52,8 +52,8 @@ def analyze(filename):
         'dBm': y,
         'amp': yvolt,
         'f0': p[1],
-        'kappa': p[2],
-        'Q': p[1]/(2*pi*p[2]),
+        'kappa': kappa,
+        'Q': q,
         'fig': grid,
         'f0err': f0err,
         'kappaerr': kappaerr,
